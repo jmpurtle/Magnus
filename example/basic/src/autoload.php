@@ -6,8 +6,6 @@ namespace Magnus {
 		$packageDir = dirname(__DIR__, 4);
 		$vendorsDir = dirname(__DIR__) . '/vendor';
 
-		echo $vendorsDir . '/' . $className . '.php';
-
 		if (file_exists($packageDir . '/' . $className . '.php')) {
 			require_once $packageDir . '/' . $className . '.php';
 		} else if (file_exists(__DIR__ . '/' . $className . '.php')) {
