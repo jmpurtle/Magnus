@@ -74,12 +74,14 @@ namespace Magnus\Core {
 				if ($isEndpoint) { break; }
 			}
 			// Dispatch routed handler
+			$dispatch = new \Magnus\Core\Dispatch($this->context, $this->context['logger']);
+			$dispatch($this->context, $obj, $previous, $this->context['extensions']['signals']);
 
+			$response = $dispatch->getFinalResponse($this->context);
 			// Negotiate output content
 
 			// Render response
-			$obj = $this->context['root'];
-			echo var_export($obj, true);
+			echo var_export($response, true);
 
 		}
 	}
