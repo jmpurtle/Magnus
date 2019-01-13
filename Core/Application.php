@@ -4,7 +4,7 @@ namespace Magnus\Core {
 	class Application {
 
 		public $context = array(
-			'debug'              => false,
+			'debug'              => true,
 			'parse'              => 'Requests',
 			'route'              => 'ObjectRouter',
 			'dispatch'           => 'SimpleDispatch',
@@ -17,7 +17,7 @@ namespace Magnus\Core {
 					'route'     => array(), //Executed during request routing
 					'dispatch'  => array(), //Executed during request dispatching
 					'negotiate' => array(), //Executed during request content negotiation
-					'transform' => array(), //Executed during templating or response transformation
+					'render'    => array(), //Executed during templating or response transformation
 					'done'      => array() //Executed after transmitting response to client
 				)
 			)
@@ -68,6 +68,16 @@ namespace Magnus\Core {
 
 			// Begin request parsing
 			$request = new \Magnus\Core\Requests($this->context, $this->context['extensions']['signals']);
+			// Begin routing
+			$router = new \Magnus\Core\Router($this->context, $this->context['logger']);
+			foreach ($router($this->context, $this->context['root'], $request->path) as list($previous, $obj, $isEndpoint)) {
+				if ($isEndpoint) { break; }
+			}
+			// Dispatch routed handler
+
+			// Negotiate output content
+
+			// Render response
 			$obj = $this->context['root'];
 			echo var_export($obj, true);
 
