@@ -63,9 +63,11 @@ namespace Magnus\Core {
 		public function run() {
 			/* Processes a single request/response cycle. The request/response cycle is composed of
 			 * core extension signals triggering extensions as necessary. You can see the full lifecycle
-			 * in Magnus/Core/Extensions/Base.php (currently in $context->extensions). 
+			 * in Magnus/Extensions/Base.php (currently in $context->extensions). 
 			 */
 
+			// Begin request parsing
+			$request = new \Magnus\Core\Requests($this->context, $this->context['extensions']['signals']);
 			$obj = $this->context['root'];
 			echo var_export($obj, true);
 
