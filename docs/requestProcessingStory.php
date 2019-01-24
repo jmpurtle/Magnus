@@ -53,4 +53,22 @@ Scenario: URL chunking
 		And query strings are parsed out into a QSA field:
 		<?php echo var_export($qsa == array("foo" => "bar")); ?>
 
+Scenario: POST Requests
+	
+	Given a POST request
+	<?php
+	//It's not really possible to emulate a proper POST request via unit testing so this'll sub for that
+	$_POST['foo'] = 'bar';
+	?>
+
+		When processed:
+		<?php
+		$request = new \Magnus\Core\Requests();
+		$responseBody = $request->getRequestBody();
+		?>
+
+		Then the call should result in a POST body array:
+		<?php echo var_export($responseBody == array('foo' => 'bar')); ?>
+
+
 <?php echo "\n"; ?>

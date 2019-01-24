@@ -47,5 +47,25 @@ namespace Magnus\Core {
 
 		}
 
+		public function getRequestBody() {
+			return isset($_POST) ? $_POST : array();
+		}
+
+		public function extractHeaders() {
+			if (!function_exists('getallheaders')) {
+				if (!is_array($_SERVER)) {
+		            return array();
+		        }
+		        $headers = array();
+		        foreach ($_SERVER as $name => $value) {
+		            if (substr($name, 0, 5) == 'HTTP_') {
+		                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+		            }
+		        }
+		        return $headers;
+			} 
+			return getallheaders();
+		}
+
 	}
 }
