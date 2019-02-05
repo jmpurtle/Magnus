@@ -1,10 +1,9 @@
 <?php
 namespace Utils\Testing {
 	
-	class RootController {
+	class FooController {
 
 		private $context;
-		public $foo = '\\Utils\\Testing\\FooController';
 
 		public function __construct($context = null) {
 			$this->context = $context;

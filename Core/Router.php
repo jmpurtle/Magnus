@@ -35,15 +35,36 @@ namespace Magnus\Core {
 
 			$routeIterator = $this->routeIterator($path);
 
+			foreach ($routeIterator as list($previous, $current)) {
+
+				// This section would only be hit if there's more than one element in the path
+				if (!is_object($obj)) {
+					if (class_exists($obj)) {
+						$obj = new $obj();
+					} else {
+						yield [$previous, $obj, true];
+						return;
+					}
+				}
+
+				if (array_key_exists($current, get_object_vars($obj))) {
+					yield [$previous, $obj, $isEndpoint];
+					$obj = $obj->$current;
+					continue;
+				}
+
+				yield [$previous, $obj, $isEndpoint];
+			}
+
+			// A little duplication but the performance hit of extracting isn't worth it
+			// We've run out of path elements to consume (if any)
 			if (!is_object($obj)) {
 				if (class_exists($obj)) {
 					$obj = new $obj();
+				} else {
+					yield [$previous, $obj, true];
+					return;
 				}
-			}
-
-			foreach ($routeIterator as list($previous, $current)) {
-
-				yield [$previous, $obj, $isEndpoint];
 			}
 
 			yield [$previous, $obj, $isEndpoint];

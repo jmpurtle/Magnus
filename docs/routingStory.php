@@ -99,5 +99,37 @@ Scenario: Object Descent routing with controller reference instead of object
 	), true); 
 	?>
 
+Scenario: Object Descent routing with a property referring to a controller
+	<?php $router = new \Magnus\Core\Router(); ?>
 
+	Given a path with one chunk:
+	<?php $path = array('foo'); ?>
+
+	And a Root Controller Object:
+	<?php $rootObject = new \Utils\Testing\RootController(); ?>
+
+	And this Root Controller object contains a property named foo:
+	<?php echo var_export(property_exists($rootObject, 'foo'), true); ?>
+
+	And foo refers to another controller by name:
+	<?php echo var_export($rootObject->foo === '\\Utils\\Testing\\FooController', true); ?>
+
+	And this referenced controller exists:
+	<?php echo var_export(class_exists($rootObject->foo), true); ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a handler of FooController, indicating __invoke() should be called:
+	<?php
+	echo var_export((
+		$previous == null &&
+		get_class($obj) == "Utils\Testing\FooController" &&
+		$isEndpoint === false
+	), true); 
+	?>
 
