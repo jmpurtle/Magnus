@@ -17,9 +17,7 @@ Scenario: Empty path handling
 	<?php foreach ($router->routeIterator($path) as list($previous, $current)) {} ?>
 
 	Then the call should fail to set $previous and $current:
-	<?php
-	echo var_export((!isset($previous) && !isset($current)), true);
-	?>
+	<?= var_export((!isset($previous) && !isset($current)), true); ?>
 
 Scenario: One chunk path handling
 	<?php $router = new \Magnus\Core\Router(); ?>
@@ -31,9 +29,7 @@ Scenario: One chunk path handling
 	<?php foreach ($router->routeIterator($path) as list($previous, $current)) {} ?>
 
 	Then the call should set $previous and $current to null and foo:
-	<?php
-	echo var_export(($previous === null && $current == 'foo'), true);
-	?>
+	<?= var_export(($previous === null && $current == 'foo'), true); ?>
 
 Scenario: Multiple chunk path handling
 	<?php $router = new \Magnus\Core\Router(); ?>
@@ -45,9 +41,7 @@ Scenario: Multiple chunk path handling
 	<?php foreach ($router->routeIterator($path) as list($previous, $current)) {} ?>
 
 	Then the call should set $previous and $current to foo and bar:
-	<?php
-	echo var_export(($previous === 'foo' && $current == 'bar'), true);
-	?>
+	<?= var_export(($previous === 'foo' && $current == 'bar'), true); ?>
 
 Scenario: Object Descent routing with empty paths
 	<?php $router = new \Magnus\Core\Router(); ?>
@@ -66,8 +60,8 @@ Scenario: Object Descent routing with empty paths
 	?>
 
 	Then the call should result in a handler of the original root object, indicating __invoke() should be called:
-	<?php
-	echo var_export((
+	<?=
+	var_export((
 		$previous == null &&
 		get_class($obj) == "Utils\Testing\RootController" &&
 		$isEndpoint === false
@@ -91,8 +85,8 @@ Scenario: Object Descent routing with controller reference instead of object
 	?>
 
 	Then the call should result in a handler of the original root object, indicating __invoke() should be called:
-	<?php
-	echo var_export((
+	<?=
+	var_export((
 		$previous == null &&
 		get_class($obj) == "Utils\Testing\RootController" &&
 		$isEndpoint === false
@@ -109,13 +103,13 @@ Scenario: Object Descent routing with a property referring to a controller
 	<?php $rootObject = new \Utils\Testing\RootController(); ?>
 
 	And this Root Controller object contains a property named foo:
-	<?php echo var_export(property_exists($rootObject, 'foo'), true); ?>
+	<?= var_export(property_exists($rootObject, 'foo'), true); ?>
 
 	And foo refers to another controller by name:
-	<?php echo var_export($rootObject->foo === '\\Utils\\Testing\\FooController', true); ?>
+	<?= var_export($rootObject->foo === '\\Utils\\Testing\\FooController', true); ?>
 
 	And this referenced controller exists:
-	<?php echo var_export(class_exists($rootObject->foo), true); ?>
+	<?= var_export(class_exists($rootObject->foo), true); ?>
 
 	When routed:
 	<?php
@@ -125,8 +119,8 @@ Scenario: Object Descent routing with a property referring to a controller
 	?>
 
 	Then the call should result in a handler of FooController, indicating __invoke() should be called:
-	<?php
-	echo var_export((
+	<?=
+	var_export((
 		$previous == null &&
 		get_class($obj) == "Utils\Testing\FooController" &&
 		$isEndpoint === false

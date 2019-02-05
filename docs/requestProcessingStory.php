@@ -19,7 +19,7 @@ Scenario: URL chunking
 		?>
 
 		Then the call should result in an empty path array:
-		<?php echo var_export($path == array(), true); ?>
+		<?= var_export($path == array(), true); ?>
 
 	Given an URL with query string
 	<?php $_SERVER['REQUEST_URI'] = '/?foo=bar'; ?>
@@ -32,10 +32,10 @@ Scenario: URL chunking
 		?>
 
 		Then the call should result in a path array without query string:
-		<?php echo var_export($path == array(), true); ?>
+		<?= var_export($path == array(), true); ?>
 
 		And query strings are parsed out into a QSA field:
-		<?php echo var_export($qsa == array("foo" => "bar")); ?>
+		<?= var_export($qsa == array("foo" => "bar")); ?>
 
 	Given an URL with multiple parts
 	<?php $_SERVER['REQUEST_URI'] = '/baz/qux?foo=bar'; ?>
@@ -48,10 +48,10 @@ Scenario: URL chunking
 		?>
 
 		Then the call should result in a path array without query string:
-		<?php echo var_export($path == array('baz', 'qux'), true); ?>
+		<?= var_export($path == array('baz', 'qux'), true); ?>
 
 		And query strings are parsed out into a QSA field:
-		<?php echo var_export($qsa == array("foo" => "bar")); ?>
+		<?= var_export($qsa == array("foo" => "bar")); ?>
 
 Scenario: POST Requests
 	
@@ -68,7 +68,6 @@ Scenario: POST Requests
 		?>
 
 		Then the call should result in a POST body array:
-		<?php echo var_export($responseBody == array('foo' => 'bar')); ?>
+		<?= var_export($responseBody == array('foo' => 'bar')); ?>
 
 
-<?php echo "\n"; ?>
