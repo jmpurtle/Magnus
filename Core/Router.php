@@ -35,7 +35,14 @@ namespace Magnus\Core {
 
 			$routeIterator = $this->routeIterator($path);
 
+			if (!is_object($obj)) {
+				if (class_exists($obj)) {
+					$obj = new $obj();
+				}
+			}
+
 			foreach ($routeIterator as list($previous, $current)) {
+
 				yield [$previous, $obj, $isEndpoint];
 			}
 

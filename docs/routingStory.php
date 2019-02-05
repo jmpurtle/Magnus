@@ -74,4 +74,30 @@ Scenario: Object Descent routing with empty paths
 	), true); 
 	?>
 
-	
+Scenario: Object Descent routing with controller reference instead of object
+	<?php $router = new \Magnus\Core\Router(); ?>
+
+	Given an empty path:
+	<?php $path = array(); ?>
+
+	And a Root Controller Object reference:
+	<?php $rootObject = '\\Utils\\Testing\\RootController'; ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a handler of the original root object, indicating __invoke() should be called:
+	<?php
+	echo var_export((
+		$previous == null &&
+		get_class($obj) == "Utils\Testing\RootController" &&
+		$isEndpoint === false
+	), true); 
+	?>
+
+
+
