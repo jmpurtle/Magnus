@@ -127,3 +127,33 @@ Scenario: Object Descent routing with a property referring to a controller
 	), true); 
 	?>
 
+Scenario: Object Descent routing with chunk referring to method
+	<?php $router = new \Magnus\Core\Router(); ?>
+
+	Given a path with one chunk:
+	<?php $path = array('bar'); ?>
+
+	And a Root Controller Object:
+	<?php $rootObject = new \Utils\Testing\RootController(); ?>
+
+	And this Root Controller object contains a method named bar:
+	<?= var_export(method_exists($rootObject, 'bar'), true); ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a handler of RootController, indicating bar should be called:
+	<?=
+	var_export((
+		$previous == 'bar' &&
+		get_class($obj) == "Utils\Testing\RootController" &&
+		$isEndpoint === true
+	), true);
+	?>
+
+
+

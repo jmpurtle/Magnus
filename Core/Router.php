@@ -47,6 +47,21 @@ namespace Magnus\Core {
 					}
 				}
 
+				/* Methods using this router are assumed to be endpoints
+				 * 
+				 * By uaing get_class_methods, we provide a timing safe collection of available methods.
+				 * In addition to this, only public methods are exposed which prevents attempts against
+				 * private or protected methods designed for internal functionality.
+				 */
+				if (in_array($current, get_class_methods($obj))) {
+					// Since we found an endpoint, we'll break out of the loop early and yield values
+					$isEndpoint = true;
+					break;
+				}
+
+				/* No methods, huh? Let's check the public properties for controller references or static values.
+				 * Like before, we make use of get_object_vars to obtain a safe set of values to check against.
+				 */
 				if (array_key_exists($current, get_object_vars($obj))) {
 					yield [$previous, $obj, $isEndpoint];
 					$obj = $obj->$current;
@@ -54,6 +69,21 @@ namespace Magnus\Core {
 				}
 
 				yield [$previous, $obj, $isEndpoint];
+			}
+
+			if ($routeIterator->valid()) {
+
+				/* We bailed out of the loop early for whatever reason, so obj is our handler
+				 * and current would be what we're using on obj.
+				 */
+
+				/* If it's an endpoint, we want to make the object and its method available
+				 * to the application layer to dispatch upon
+				 */
+				if ($isEndpoint) { $previous = $current; }
+
+				yield [$previous, $obj, $isEndpoint];
+				return;
 			}
 
 			// A little duplication but the performance hit of extracting isn't worth it
