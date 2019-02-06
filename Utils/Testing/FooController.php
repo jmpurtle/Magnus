@@ -15,6 +15,10 @@ namespace Utils\Testing {
 
 		}
 
+		public function __get($id) {
+			return new BazController($this->context, $id);
+		}
+
 	}
 	
 }

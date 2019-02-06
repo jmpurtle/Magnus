@@ -155,5 +155,40 @@ Scenario: Object Descent routing with chunk referring to method
 	), true);
 	?>
 
+Scenario: Object Descent routing with variable chunk
+	<?php $router = new \Magnus\Core\Router(); ?>
+
+	Given a path with a variable chunk:
+	<?php $path = array('1234'); ?>
+
+	And a Foo Controller Object:
+	<?php $rootObject = new \Utils\Testing\FooController(); ?>
+
+	And this Foo Controller object contains a method named __get:
+	<?= var_export(method_exists($rootObject, '__get'), true); ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a handler of BarController, indicating __invoke() should be called:
+	<?=
+	var_export((
+		$previous == null &&
+		get_class($obj) == "Utils\Testing\BazController" &&
+		$isEndpoint === false
+	), true);
+	?>
+
+	And BazController should have a string ID of 1234:
+	<?=
+	var_export((
+		$obj->id == '1234'
+	), true);
+	?>
+
 
 

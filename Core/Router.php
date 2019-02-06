@@ -68,6 +68,24 @@ namespace Magnus\Core {
 					continue;
 				}
 
+				/* Didn't find a reference or a static asset, might be a variable path element.
+                 * Variable path elements are often denoted by {variable} in API documents. Such as {id} for
+                 * selecting a specific ID version of a resource. It's expected by the dispatch protocol for
+                 * controllers to implement __get for these variable path elements. __get will often times
+                 * return a resource controller initialized with that specific ID. For example, in a
+                 * PhotosController, the __get method would return a PhotoController($context, {id})
+                 * For API clients that may not support altering the HTTP method beyond GET and POST, controllers
+                 * may listen in __get for specific HTTP methods like 'put', 'patch', 'delete' and handle it
+                 * accordingly.
+                 */
+
+				if (method_exists($obj, '__get')) {
+
+					$obj = $obj->__get($current);
+					yield [$previous, $obj, $isEndpoint];
+					continue;
+				}
+
 				yield [$previous, $obj, $isEndpoint];
 			}
 
