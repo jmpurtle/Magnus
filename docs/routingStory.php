@@ -190,5 +190,57 @@ Scenario: Object Descent routing with variable chunk
 	), true);
 	?>
 
+Scenario: Object Descent routing with chunk referring to non-object property
+	<?php $router = new \Magnus\Core\Router(); ?>
 
+	Given a path with a chunk:
+	<?php $path = array('qux'); ?>
 
+	And a Root Controller Object:
+	<?php $rootObject = new \Utils\Testing\RootController(); ?>
+
+	And this Root Controller object contains a property that is a standard value:
+	<?= var_export(($rootObject->qux == 'A static value'), true); ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a static value for $obj to be used literally:
+	<?=
+	var_export((
+		$previous === null &&
+		$obj == 'A static value' &&
+		$isEndpoint === true
+	), true);
+	?>
+
+Scenario: Object Descent routing with descent and chunk referring to non-object property
+	<?php $router = new \Magnus\Core\Router(); ?>
+
+	Given a path with a chunk:
+	<?php $path = array('foo', 'thud'); ?>
+
+	And a Root Controller Object:
+	<?php $rootObject = new \Utils\Testing\RootController(); ?>
+
+	When routed:
+	<?php
+	foreach ($router($rootObject, $path) as list($previous, $obj, $isEndpoint)) {
+		if ($isEndpoint) { break; }
+	}
+	?>
+
+	Then the call should result in a static value for $obj to be used literally:
+	<?=
+	var_export((
+		$previous === 'foo' &&
+		$obj == 'Another static value' &&
+		$isEndpoint === true
+	), true);
+	?>
+
+<?= "\n\n"; ?>

@@ -4,6 +4,7 @@ namespace Utils\Testing {
 	class FooController {
 
 		private $context;
+		public $thud = 'Another static value';
 
 		public function __construct($context = null) {
 			$this->context = $context;
