@@ -23,4 +23,23 @@ Scenario: Static value dispatching
 	Then the call should result in "hi":
 	<?= var_export(($result == "hi"), true); ?>
 
+Scenario: Invoking a root object
+	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
+
+	Given a standard object routed result:
+	<?php
+	$previous = null;
+	$obj = new \Utils\Testing\RootController();
+	$isEndpoint = false;
+	?>
+
+	And the object has an __invoke() function:
+	<?= var_export(method_exists($obj, '__invoke'), true); ?>
+
+	When dispatched:
+	<?php $result = $dispatch($previous, $obj); ?>
+
+	Then the call should result in __invoke() being called:
+	<?= var_export(($result == array('__invoke')), true); ?>
+
 <?= "\n\n"; ?>

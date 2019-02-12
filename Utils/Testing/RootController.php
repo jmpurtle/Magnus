@@ -19,7 +19,7 @@ namespace Utils\Testing {
 
 		public function __invoke($path = array(), $context = null) {
 
-			return array();
+			return array('__invoke');
 
 		}
 

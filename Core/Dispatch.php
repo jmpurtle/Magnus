@@ -19,8 +19,10 @@ namespace Magnus\Core {
 				 */
 
 				return $endpoint;
-				
+
 			}
+
+			return $endpoint();
 
 		}
 
