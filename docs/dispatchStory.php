@@ -42,4 +42,20 @@ Scenario: Invoking a root object
 	Then the call should result in __invoke() being called:
 	<?= var_export(($result == array('__invoke')), true); ?>
 
+Scenario: Invoking a root object not implementing __invoke
+	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
+
+	Given a standard object routed result:
+	<?php
+	$previous = null;
+	$obj = new \Utils\Testing\VoidController();
+	$isEndpoint = false;
+	?>
+
+	When dispatched:
+	<?php $result = $dispatch($previous, $obj); ?>
+
+	Then the call should result in the handler being returned:
+	<?= var_export((get_class($result) == "Utils\Testing\VoidController"), true); ?>
+
 <?= "\n\n"; ?>
