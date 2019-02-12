@@ -13,7 +13,7 @@ namespace Utils\Testing {
 
 		public function bar($path = array(), $context = null) {
 
-			return array();
+			return array('bar');
 
 		}
 

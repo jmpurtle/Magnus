@@ -23,7 +23,7 @@ Scenario: Static value dispatching
 	Then the call should result in "hi":
 	<?= var_export(($result == "hi"), true); ?>
 
-Scenario: Invoking a root object
+Scenario: Invoking a object
 	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
 
 	Given a standard object routed result:
@@ -42,7 +42,7 @@ Scenario: Invoking a root object
 	Then the call should result in __invoke() being called:
 	<?= var_export(($result == array('__invoke')), true); ?>
 
-Scenario: Invoking a root object not implementing __invoke
+Scenario: Invoking a object not implementing __invoke
 	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
 
 	Given a standard object routed result:
@@ -57,5 +57,21 @@ Scenario: Invoking a root object not implementing __invoke
 
 	Then the call should result in the handler being returned:
 	<?= var_export((get_class($result) == "Utils\Testing\VoidController"), true); ?>
+
+Scenario: Invoking a object method
+	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
+
+	Given a standard object routed result:
+	<?php
+	$previous = 'bar';
+	$obj = new \Utils\Testing\RootController();
+	$isEndpoint = false;
+	?>
+
+	When dispatched:
+	<?php $result = $dispatch($previous, $obj); ?>
+
+	Then the call should result in calling bar:
+	<?= var_export(($result == array('bar')), true); ?>
 
 <?= "\n\n"; ?>

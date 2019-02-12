@@ -22,6 +22,10 @@ namespace Magnus\Core {
 
 			}
 
+			if (in_array($pathElement, get_class_methods($endpoint))) {
+				return $endpoint->$pathElement();
+			}
+
 			return $endpoint();
 
 		}
