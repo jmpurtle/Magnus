@@ -15,3 +15,12 @@ Scenario: Loading blank application configuration
 	Then the application should have just the blank extensions registry:
 	<?= var_export($app->config == array('extensions' => array()), true); ?>
 
+Scenario: Loading an application configuration
+
+	Given an initialized application with configuration passed in:
+	<?php $app = new \Magnus\Core\Application(null, array('foo' => 'bar')); ?>
+
+	Then the application should have extensions plus config passed in:
+	<?= var_export($app->config == array('foo' => 'bar', 'extensions' => array()), true); ?>
+
+	
