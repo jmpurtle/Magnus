@@ -23,4 +23,11 @@ Scenario: Loading an application configuration
 	Then the application should have extensions plus config passed in:
 	<?= var_export($app->config == array('foo' => 'bar', 'extensions' => array()), true); ?>
 
-	
+Scenario: Loading an application configuration with extensions
+
+	Given an initialized application with configuration passed in:
+	<?php $app = new \Magnus\Core\Application(null, array('extensions' => array('bar'))); ?>
+
+	Then the application should have extensions plus config passed in:
+	<?= var_export($app->config == array('extensions' => array('bar')), true); ?>
+
