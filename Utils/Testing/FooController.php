@@ -10,7 +10,7 @@ namespace Utils\Testing {
 			$this->context = $context;
 		}
 
-		public function __invoke($context = null, Array $args = array()) {
+		public function __invoke($path = array(), $context = null) {
 
 			return array();
 
