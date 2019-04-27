@@ -11,7 +11,7 @@ namespace Utils\Testing {
 			$this->id = $id;
 		}
 
-		public function __invoke($path = array(), $context = null) {
+		public function __invoke($context = null) {
 
 			return array($this->id);
 
