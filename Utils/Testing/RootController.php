@@ -11,13 +11,13 @@ namespace Utils\Testing {
 			$this->context = $context;
 		}
 
-		public function bar($path = array(), $context = null) {
+		public function bar($context = null, Array $args = array()) {
 
 			return array('bar');
 
 		}
 
-		public function __invoke($path = array(), $context = null) {
+		public function __invoke($context = null, Array $args = array()) {
 
 			return array('__invoke');
 

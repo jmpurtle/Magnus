@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $packageRoot = dirname(__DIR__);
 require_once $packageRoot . '/autoload.php';
 ?>
@@ -15,13 +18,15 @@ Scenario: Static value dispatching
 	$previous = null;
 	$obj = 'hi';
 	$isEndpoint = true;
+	$remaining = array();
 	?>
 
 	When dispatched:
-	<?php $result = $dispatch($previous, $obj); ?>
+	<?php $result = $dispatch($previous, $obj, $remaining); ?>
 
 	Then the call should result in "hi":
 	<?= var_export(($result == "hi"), true); ?>
+
 
 Scenario: Invoking a object
 	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
@@ -31,16 +36,18 @@ Scenario: Invoking a object
 	$previous = null;
 	$obj = new \Utils\Testing\RootController();
 	$isEndpoint = false;
+	$remaining = array();
 	?>
 
 	And the object has an __invoke() function:
 	<?= var_export(method_exists($obj, '__invoke'), true); ?>
 
 	When dispatched:
-	<?php $result = $dispatch($previous, $obj); ?>
+	<?php $result = $dispatch($previous, $obj, $remaining); ?>
 
 	Then the call should result in __invoke() being called:
 	<?= var_export(($result == array('__invoke')), true); ?>
+
 
 Scenario: Invoking a object not implementing __invoke
 	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
@@ -50,13 +57,15 @@ Scenario: Invoking a object not implementing __invoke
 	$previous = null;
 	$obj = new \Utils\Testing\VoidController();
 	$isEndpoint = false;
+	$remaining= array();
 	?>
 
 	When dispatched:
-	<?php $result = $dispatch($previous, $obj); ?>
+	<?php $result = $dispatch($previous, $obj, $remaining); ?>
 
 	Then the call should result in the handler being returned:
 	<?= var_export((get_class($result) == "Utils\Testing\VoidController"), true); ?>
+
 
 Scenario: Invoking a object method
 	<?php $dispatch = new \Magnus\Core\Dispatch(); ?>
@@ -66,10 +75,11 @@ Scenario: Invoking a object method
 	$previous = 'bar';
 	$obj = new \Utils\Testing\RootController();
 	$isEndpoint = false;
+	$remaining = array();
 	?>
 
 	When dispatched:
-	<?php $result = $dispatch($previous, $obj); ?>
+	<?php $result = $dispatch($previous, $obj, $remaining); ?>
 
 	Then the call should result in calling bar:
 	<?= var_export(($result == array('bar')), true); ?>
