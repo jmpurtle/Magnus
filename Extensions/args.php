@@ -57,6 +57,15 @@ namespace Magnus\Extensions {
 		public $needs    = array('request');
 		public $uses     = array('args.context');
 		public $provides = array('args', 'args.remainder');
+
+	}
+
+	class QueryStringArgsExtension extends ArgumentExtension {
+		// Add query string args ("GET") as keyword arguments.
+
+		public $first = true;
+		public $needs = array('request');
+		public $provides = array('kwargs', 'kwargs.get');
 		
 	}
 

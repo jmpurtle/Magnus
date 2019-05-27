@@ -56,4 +56,7 @@ Scenario: Including basic extensions
 	And the application should also have a RemainderArgsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][3], 'Magnus\\Extensions\\RemainderArgsExtension')); ?>
 
+	And the application should also have a QueryStringArgsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][4], 'Magnus\\Extensions\\QueryStringArgsExtension')); ?>
+
 <?= "\r\n"; ?>

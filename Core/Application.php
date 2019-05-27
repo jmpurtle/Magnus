@@ -58,7 +58,8 @@ namespace Magnus\Core {
 				array_push($config['extensions'],
 					new \Magnus\Extensions\ValidateArgumentsExtension(),
 					new \Magnus\Extensions\ContextArgsExtension(),
-					new \Magnus\Extensions\RemainderArgsExtension()
+					new \Magnus\Extensions\RemainderArgsExtension(),
+					new \MAgnus\Extensions\QueryStringArgsExtension()
 				);
 			}
 
