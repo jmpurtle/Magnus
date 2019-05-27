@@ -47,6 +47,16 @@ namespace Magnus\Extensions {
 			 */
 			$this->always = $always;
 		}
+
+	}
+
+	class RemainderArgsExtension extends ArgumentExtension {
+		// Adds any unprocessed path segments as positional args.
+
+		public $first    = true;
+		public $needs    = array('request');
+		public $uses     = array('args.context');
+		public $provides = array('args', 'args.remainder');
 		
 	}
 

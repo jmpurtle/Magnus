@@ -5,8 +5,10 @@ namespace Magnus {
 		$classMap = array(
 			// Extensions
 			'Magnus\\Extensions\\BaseExtension'              => '/Extensions/base',
+			'Magnus\\Extensions\\ArgumentExtension'          => '/Extensions/args',
 			'Magnus\\Extensions\\ValidateArgumentsExtension' => '/Extensions/args',
-			'Magnus\\Extensions\\ContextArgsExtension'       => '/Extensions/args'
+			'Magnus\\Extensions\\ContextArgsExtension'       => '/Extensions/args',
+			'Magnus\\Extensions\\RemainderArgsExtension'     => '/Extensions/args'
 		);
 
 		if (isset($classMap[$className])) {

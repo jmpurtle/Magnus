@@ -52,5 +52,8 @@ Scenario: Including basic extensions
 
 	And the application should also have a ContextArgsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][2], 'Magnus\\Extensions\\ContextArgsExtension')); ?>
-	
+
+	And the application should also have a RemainderArgsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][3], 'Magnus\\Extensions\\RemainderArgsExtension')); ?>
+
 <?= "\r\n"; ?>
