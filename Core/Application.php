@@ -59,7 +59,8 @@ namespace Magnus\Core {
 					new \Magnus\Extensions\ValidateArgumentsExtension(),
 					new \Magnus\Extensions\ContextArgsExtension(),
 					new \Magnus\Extensions\RemainderArgsExtension(),
-					new \MAgnus\Extensions\QueryStringArgsExtension()
+					new \Magnus\Extensions\QueryStringArgsExtension(),
+					new \Magnus\Extensions\FormEncodedKwargsExtension()
 				);
 			}
 

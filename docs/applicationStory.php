@@ -59,4 +59,7 @@ Scenario: Including basic extensions
 	And the application should also have a QueryStringArgsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][4], 'Magnus\\Extensions\\QueryStringArgsExtension')); ?>
 
+	And the application should also have a FormEncodedKwargsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][5], 'Magnus\\Extensions\\FormEncodedKwargsExtension')); ?>
+
 <?= "\r\n"; ?>

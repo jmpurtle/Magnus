@@ -63,10 +63,20 @@ namespace Magnus\Extensions {
 	class QueryStringArgsExtension extends ArgumentExtension {
 		// Add query string args ("GET") as keyword arguments.
 
-		public $first = true;
-		public $needs = array('request');
+		public $first    = true;
+		public $needs    = array('request');
 		public $provides = array('kwargs', 'kwargs.get');
-		
+
+	}
+
+	class FormEncodedKwargsExtension extends ArgumentExtension {
+		// Add form-encoded or MIME multipart ("POST") args as keyword args.
+
+		public $first    = true;
+		public $needs    = array('request');
+		public $uses     = array('kwargs.get'); // QSA must be processed first
+		public $provides = array('kwargs', 'kwargs.post');
+
 	}
 
 }
