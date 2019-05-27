@@ -11,10 +11,13 @@ namespace Magnus\Core {
 			 *
 			 * Current configuration is limited to two arguments:
 			 *
-			 * `root` -- The object used as the starting point of routing each request
-			 * `config` -- These are all the contextual properties and values you wish to provide in addition
-			 * to standard ones. For example, if your application uses databases, you may pass database 
-			 * credentials into it. Application version numbers are another example.
+			 * `root` -- The object used as the starting point of routing each 
+			 * request
+			 * `config` -- These are all the contextual properties and values 
+			 * you wish to provide in addition
+			 * to standard ones. For example, if your application uses 
+			 * databases, you may pass database credentials into it.
+			 * Application version numbers are another example.
 			 */
 
 			$this->config = $this->configure($config);
@@ -27,6 +30,18 @@ namespace Magnus\Core {
 			 */
 			if (!isset($config['extensions'])) {
 				$config['extensions'] = array();
+			}
+
+			$baseExtensionIncluded = false;
+			foreach ($config['extensions'] as $ext) {
+				if (is_a($ext, 'Magnus\\Extensions\\BaseExtension')) {
+					$baseExtensionIncluded = true;
+					break;
+				}
+			}
+
+			if (!$baseExtensionIncluded) {
+				array_unshift($config['extensions'], new \Magnus\Extensions\BaseExtension());
 			}
 
 			return $config;

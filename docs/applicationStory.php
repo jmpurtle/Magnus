@@ -1,6 +1,10 @@
 <?php
 $packageRoot = dirname(__DIR__);
 require_once $packageRoot . '/autoload.php';
+
+function printEval($expr) {
+	return var_export($expr, true);
+}
 ?>
 Feature: Application
 		 As a Website Builder
@@ -13,7 +17,7 @@ Scenario: Loading blank application configuration
 	<?php $app = new \Magnus\Core\Application(null); ?>
 
 	Then the application should have just the blank extensions registry:
-	<?= var_export($app->config == array('extensions' => array()), true); ?>
+	<?= printEval($app->config == array('extensions' => array())); ?>
 
 Scenario: Loading an application configuration
 
@@ -21,7 +25,7 @@ Scenario: Loading an application configuration
 	<?php $app = new \Magnus\Core\Application(null, array('foo' => 'bar')); ?>
 
 	Then the application should have extensions plus config passed in:
-	<?= var_export($app->config == array('foo' => 'bar', 'extensions' => array()), true); ?>
+	<?= printEval($app->config['foo'] == 'bar' && isset($app->config['extensions'])); ?>
 
 Scenario: Loading an application configuration with extensions
 
@@ -29,5 +33,14 @@ Scenario: Loading an application configuration with extensions
 	<?php $app = new \Magnus\Core\Application(null, array('extensions' => array('bar'))); ?>
 
 	Then the application should have extensions plus config passed in:
-	<?= var_export($app->config == array('extensions' => array('bar')), true); ?>
+	<?= printEval($app->config['extensions'][1] == 'bar'); ?>
 
+Scenario: Including BaseExtension by default
+
+	Given an initialized application:
+	<?php $app = new \Magnus\Core\Application(null); ?>
+
+	Then the application should have a BaseExtension in it:
+	<?= printEval(is_a($app->config['extensions'][0], 'Magnus\\Extensions\\BaseExtension')); ?>
+
+<?= "\r\n"; ?>
