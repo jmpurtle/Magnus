@@ -60,7 +60,8 @@ namespace Magnus\Core {
 					new \Magnus\Extensions\ContextArgsExtension(),
 					new \Magnus\Extensions\RemainderArgsExtension(),
 					new \Magnus\Extensions\QueryStringArgsExtension(),
-					new \Magnus\Extensions\FormEncodedKwargsExtension()
+					new \Magnus\Extensions\FormEncodedKwargsExtension(),
+					new \Magnus\Extensions\JSONKwargsExtension()
 				);
 			}
 

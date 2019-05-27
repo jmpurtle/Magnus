@@ -62,4 +62,7 @@ Scenario: Including basic extensions
 	And the application should also have a FormEncodedKwargsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][5], 'Magnus\\Extensions\\FormEncodedKwargsExtension')); ?>
 
+	And the application should also have a JSONKwargsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][6], 'Magnus\\Extensions\\JSONKwargsExtension')); ?>
+
 <?= "\r\n"; ?>

@@ -79,4 +79,14 @@ namespace Magnus\Extensions {
 
 	}
 
+	class JSONKwargsExtension extends ArgumentExtension {
+		// Adds JSON-encoded args from request body as keyword args.
+
+		public $first    = true;
+		public $needs    = array('request');
+		public $uses     = array('kwargs.get'); // We override values defined
+		public $provides = array('kwargs', 'kwargs.json');
+		
+	}
+
 }

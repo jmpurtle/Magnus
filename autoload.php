@@ -10,7 +10,8 @@ namespace Magnus {
 			'Magnus\\Extensions\\ContextArgsExtension'       => '/Extensions/args',
 			'Magnus\\Extensions\\RemainderArgsExtension'     => '/Extensions/args',
 			'Magnus\\Extensions\\QueryStringArgsExtension'   => '/Extensions/args',
-			'Magnus\\Extensions\\FormEncodedKwargsExtension' => '/Extensions/args'
+			'Magnus\\Extensions\\FormEncodedKwargsExtension' => '/Extensions/args',
+			'Magnus\\Extensions\\JSONKwargsExtension'        => '/Extensions/args'
 		);
 
 		if (isset($classMap[$className])) {
