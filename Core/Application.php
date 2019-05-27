@@ -56,7 +56,8 @@ namespace Magnus\Core {
 			if (!$argumentExtensionIncluded) {
 				// Prepare a default set of argument mutators.
 				array_push($config['extensions'],
-					new \Magnus\Extensions\ValidateArgumentsExtension()
+					new \Magnus\Extensions\ValidateArgumentsExtension(),
+					new \Magnus\Extensions\ContextArgsExtension()
 				);
 			}
 

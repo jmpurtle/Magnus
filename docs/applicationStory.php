@@ -11,6 +11,7 @@ Feature: Application
 		 I want to build an application
 		 So I can serve requests
 
+
 Scenario: Loading blank application configuration
 
 	Given an initialized application:
@@ -18,6 +19,7 @@ Scenario: Loading blank application configuration
 
 	Then the application should have just the extensions registry:
 	<?= printEval(isset($app->config['extensions'])); ?>
+
 
 Scenario: Loading an application configuration
 
@@ -27,6 +29,7 @@ Scenario: Loading an application configuration
 	Then the application should have extensions plus config passed in:
 	<?= printEval($app->config['foo'] == 'bar' && isset($app->config['extensions'])); ?>
 
+
 Scenario: Loading an application configuration with extensions
 
 	Given an initialized application with configuration passed in:
@@ -34,6 +37,7 @@ Scenario: Loading an application configuration with extensions
 
 	Then the application should have extensions plus config passed in:
 	<?= printEval($app->config['extensions'][1] == 'bar'); ?>
+
 
 Scenario: Including basic extensions
 
@@ -45,5 +49,8 @@ Scenario: Including basic extensions
 
 	And the application should also have a ValidateArgumentsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][1], 'Magnus\\Extensions\\ValidateArgumentsExtension')); ?>
+
+	And the application should also have a ContextArgsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][2], 'Magnus\\Extensions\\ContextArgsExtension')); ?>
 	
 <?= "\r\n"; ?>
