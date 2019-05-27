@@ -2,6 +2,17 @@
 namespace Magnus {
 	spl_autoload_register(function ($className) {
 
+		$classMap = array(
+			// Extensions
+			'Magnus\\Extensions\\BaseExtension'              => '/Extensions/base',
+			'Magnus\\Extensions\\ValidateArgumentsExtension' => '/Extensions/args'
+		);
+
+		if (isset($classMap[$className])) {
+			require_once __DIR__ . $classMap[$className] . '.php';
+		}
+
+		// Alternatives
 		$className  = str_replace("\\", '/', $className);
 
 		if (file_exists(__DIR__ . '/' . $className . '.php')) {

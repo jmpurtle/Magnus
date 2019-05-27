@@ -16,8 +16,8 @@ Scenario: Loading blank application configuration
 	Given an initialized application:
 	<?php $app = new \Magnus\Core\Application(null); ?>
 
-	Then the application should have just the blank extensions registry:
-	<?= printEval($app->config == array('extensions' => array())); ?>
+	Then the application should have just the extensions registry:
+	<?= printEval(isset($app->config['extensions'])); ?>
 
 Scenario: Loading an application configuration
 
@@ -35,7 +35,7 @@ Scenario: Loading an application configuration with extensions
 	Then the application should have extensions plus config passed in:
 	<?= printEval($app->config['extensions'][1] == 'bar'); ?>
 
-Scenario: Including BaseExtension by default
+Scenario: Including basic extensions
 
 	Given an initialized application:
 	<?php $app = new \Magnus\Core\Application(null); ?>
@@ -43,4 +43,7 @@ Scenario: Including BaseExtension by default
 	Then the application should have a BaseExtension in it:
 	<?= printEval(is_a($app->config['extensions'][0], 'Magnus\\Extensions\\BaseExtension')); ?>
 
+	And the application should also have a ValidateArgumentsExtension in it:
+	<?= printEval(is_a($app->config['extensions'][1], 'Magnus\\Extensions\\ValidateArgumentsExtension')); ?>
+	
 <?= "\r\n"; ?>

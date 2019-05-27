@@ -39,9 +39,25 @@ namespace Magnus\Core {
 					break;
 				}
 			}
-
 			if (!$baseExtensionIncluded) {
+				/* Always make sure the BaseExtension is present since
+				 * request/response objects are handy.
+				 */
 				array_unshift($config['extensions'], new \Magnus\Extensions\BaseExtension());
+			}
+
+			$argumentExtensionIncluded = false;
+			foreach ($config['extensions'] as $ext) {
+				if (is_a($ext, 'Magnus\\Extensions\\ArgumentExtension')) {
+					$argumentExtensionIncluded = true;
+					break;
+				}
+			}
+			if (!$argumentExtensionIncluded) {
+				// Prepare a default set of argument mutators.
+				array_push($config['extensions'],
+					new \Magnus\Extensions\ValidateArgumentsExtension()
+				);
 			}
 
 			return $config;
