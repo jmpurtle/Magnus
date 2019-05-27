@@ -4,6 +4,7 @@ namespace Magnus\Core {
 	class Application {
 
 		public $config;
+		public $context;
 
 		public function __construct($root, $config = array()) {
 			/* Creates the initial application context and populates values.
@@ -21,6 +22,14 @@ namespace Magnus\Core {
 			 */
 
 			$this->config = $this->configure($config);
+
+			// This constructs a basic context to be provided to endpoints
+			$this->context = array();
+
+			/* Circular reference? Nah, we're passing by reference.
+			 * Loading the extension registry and preparing callback.
+			 */
+			$this->context['extension'] = new \Magnus\Core\WebExtensions($this->context);
 		}
 
 		protected function configure($config = array()) {
