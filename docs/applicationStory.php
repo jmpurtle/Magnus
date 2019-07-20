@@ -65,4 +65,12 @@ Scenario: Including basic extensions
 	And the application should also have a JSONKwargsExtension in it:
 	<?= printEval(is_a($app->config['extensions'][6], 'Magnus\\Extensions\\JSONKwargsExtension')); ?>
 
+Scenario: Including Context
+
+	Given an initialized application:
+	<?php $app = new \Magnus\Core\Application(null); ?>
+
+	Then the application should have a Context object in it:
+	<?= printEval(is_a($app->context, 'Magnus\\Core\\Context')); ?>
+	
 <?= "\r\n"; ?>

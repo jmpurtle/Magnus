@@ -4,6 +4,7 @@ namespace Magnus\Core {
 	class Application {
 
 		public $config;
+		public $context;
 
 		public function __construct($root, $config = array()) {
 			/* Creates the initial application context and populates values.
@@ -21,6 +22,9 @@ namespace Magnus\Core {
 			 */
 
 			$this->config = $this->configure($config);
+
+			$this->context = new Context();
+
 		}
 
 		protected function configure($config = array()) {
