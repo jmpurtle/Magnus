@@ -4,6 +4,7 @@ namespace Magnus {
 
 		$classMap = array(
 			// Extensions
+			'Magnus\\Core\\MagnusExtensions'                 => '/Core/Extension',
 			'Magnus\\Extensions\\BaseExtension'              => '/Extensions/base',
 			'Magnus\\Extensions\\ArgumentExtension'          => '/Extensions/args',
 			'Magnus\\Extensions\\ValidateArgumentsExtension' => '/Extensions/args',

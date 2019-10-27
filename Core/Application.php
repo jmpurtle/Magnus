@@ -25,6 +25,10 @@ namespace Magnus\Core {
 
 			$this->context = new Context();
 
+			$this->exts = new \Magnus\Core\MagnusExtensions($this->context);
+
+			$this->root = $root;
+
 		}
 
 		protected function configure($config = array()) {
@@ -70,6 +74,10 @@ namespace Magnus\Core {
 			}
 
 			return $config;
+		}
+
+		public function run() {
+			echo var_export($this->root);
 		}
 		
 	}
