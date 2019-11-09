@@ -77,7 +77,18 @@ namespace Magnus\Core {
 		}
 
 		public function run() {
-			echo var_export($this->root);
+			$request = new \Magnus\Core\Requests();
+			$path = $request->getPath($_SERVER['REQUEST_URI']);
+
+			$router = new \Magnus\Core\Router();
+			foreach ($router($this->root, $path) as list($previous, $obj, $isEndpoint)) {
+				if ($isEndpoint) { break; }
+			}
+
+			$dispatch = new \Magnus\Core\Dispatch();
+			$result = $dispatch($previous, $obj);
+
+			echo var_export($result, true);
 		}
 		
 	}
