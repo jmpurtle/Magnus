@@ -71,3 +71,14 @@ Scenario: POST Requests
 		<?= var_export($responseBody == array('foo' => 'bar')); ?>
 
 
+Scenario: Session Management
+	
+	Given an initialized Requests:
+	<?php
+	$request = new \Magnus\Core\Requests();
+	$session = $request->getSession();
+	?>
+
+	Then the call should result in an empty sessions array to use:
+	<?= var_export($session == array()); ?>
+	

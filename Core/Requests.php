@@ -6,8 +6,13 @@ namespace Magnus\Core {
 		 * arguments such as query strings and request bodies
 		 */
 
-		public function __construct() {
-			
+		public $session = array();
+
+		public function __construct() {	}
+
+		public function getSession() {
+			session_start();
+			$this->session = $_SESSION;
 		}
 
 		public function getPath($url = null) {
